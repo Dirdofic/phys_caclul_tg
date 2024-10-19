@@ -10,7 +10,7 @@ import os
 import pytz
 from physics import *
 
-API_TOKEN = 'YOUR_API_TOKEN'
+API_TOKEN = 'YOUR_BOT_TOKEN'
 
 bot = Bot(token=API_TOKEN)
 storage = MemoryStorage()
@@ -133,7 +133,7 @@ async def process_energy(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         energy_keV = float(message.text)
         energy_eV = energy_keV * 1000
@@ -155,7 +155,7 @@ async def process_wavelength(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         wavelength = float(message.text)
         frequency = convert_wavelength_to_frequency(wavelength)
@@ -202,7 +202,7 @@ async def process_frequency(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         frequency = float(message.text)
         wavelength = convert_frequency_to_wavelength(frequency)
@@ -318,7 +318,7 @@ async def process_spectrum_file(message: types.Message, state: FSMContext):
             response += f"Энергия: {energy:.3f} эВ\n"
             response += f"Частота: {frequency:.3f} ТГц\n"
             response += f"Волновое число: {wavenumber:.2f} см^-1"
-            
+            await message.answer_photo(buf)
             await message.reply(response)
             await ask_for_feedback(message, state, "resonance_position_and_width")
         except Exception as e:
@@ -462,7 +462,7 @@ async def process_force(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         mass, acceleration = map(float, message.text.split())
         result = calculate_force(mass, acceleration)
@@ -477,7 +477,7 @@ async def process_momentum(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         mass, velocity = map(float, message.text.split())
         result = calculate_momentum(mass, velocity)
@@ -492,7 +492,7 @@ async def process_energy_mass(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         mass = float(message.text)
         result = calculate_energy_mass_equivalence(mass)
@@ -507,7 +507,7 @@ async def process_work(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         force, distance = map(float, message.text.split())
         result = calculate_work(force, distance)
@@ -521,7 +521,7 @@ async def process_power(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         work, time = map(float, message.text.split())
         result = calculate_power(work, time)
@@ -535,7 +535,7 @@ async def process_kinetic_energy(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         mass, velocity = map(float, message.text.split())
         result = calculate_kinetic_energy(mass, velocity)
@@ -550,7 +550,7 @@ async def process_potential_energy(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         mass, height, g = map(float, message.text.split())
         result = calculate_potential_energy(mass, height, g)
@@ -565,7 +565,7 @@ async def process_heat(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         mass, specific_heat , delta_temperature = map(float, message.text.split())
         result = calculate_heat(mass, specific_heat, delta_temperature)
@@ -580,7 +580,7 @@ async def process_ideal_gas(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         pressure, volume, n, temperature = map(float, message.text.split())
         result = ideal_gas_law(pressure, volume, n, temperature)
@@ -595,7 +595,7 @@ async def process_electric_force(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         charge, electric_field = map(float, message.text.split())
         result = electric_force(charge, electric_field)
@@ -610,7 +610,7 @@ async def process_ohms_law(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         voltage, current = map(float, message.text.split())
         result = ohms_law(voltage, current)
@@ -625,7 +625,7 @@ async def process_electric_power(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         voltage, current = map(float, message.text.split())
         result = electric_power(voltage, current)
@@ -640,7 +640,7 @@ async def process_lorentz_force(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         charge, velocity, magnetic_field = map(float, message.text.split())
         result = lorentz_force(charge, velocity, magnetic_field)
@@ -655,7 +655,7 @@ async def process_refractive_index(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         c, v = map(float, message.text.split())
         result = refractive_index(c, v)
@@ -670,7 +670,7 @@ async def process_thin_lens(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         f, u, v = map(float, message.text.split())
         result = thin_lens_equation(f, u, v)
@@ -685,7 +685,7 @@ async def process_photon_energy(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         h, f = map(float, message.text.split())
         result = photon_energy(h, f)
@@ -700,7 +700,7 @@ async def process_de_broglie(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         h, p = map(float, message.text.split())
         result = de_broglie_wavelength(h, p)
@@ -714,7 +714,7 @@ async def process_radioactive_decay(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         N0, lambda_val, t = map(float, message.text.split())
         result = radioactive_decay(N0, lambda_val, t)
@@ -729,7 +729,7 @@ async def process_wave_velocity(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         frequency, wavelength = map(float, message.text.split())
         result = wave_velocity(frequency, wavelength)
@@ -744,7 +744,7 @@ async def process_hydrostatic_pressure(message: types.Message, state: FSMContext
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         rho, g, h = map(float, message.text.split())
         result = hydrostatic_pressure(rho, g, h)
@@ -759,7 +759,7 @@ async def process_archimedes_force(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         rho, V, g = map(float, message.text.split())
         result = archimedes_force(rho, V, g)
@@ -774,7 +774,7 @@ async def process_time_dilation(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         t, v, c = map(float, message.text.split())
         result = time_dilation(t, v, c)
@@ -789,7 +789,7 @@ async def process_length_contraction(message: types.Message, state: FSMContext):
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         l, v, c = map(float, message.text.split())
         result = length_contraction(l, v, c)
@@ -804,7 +804,7 @@ async def process_gravitational_force(message: types.Message, state: FSMContext)
     if message.text == "Назад":
         await state.finish()
         await message.reply("Выберите операцию:", reply_markup=main_keyboard)
-    return
+        return
     try:
         m1, m2, r = map(float, message.text.split())
         result = gravitational_force(m1, m2, r)
@@ -814,4 +814,5 @@ async def process_gravitational_force(message: types.Message, state: FSMContext)
         await message.reply("Неправильный формат ввода. Попробуйте еще раз.")
 
 if __name__ == '__main__':
+    print('STARTING!')
     asyncio.run(dp.start_polling())
